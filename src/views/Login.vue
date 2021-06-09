@@ -11,9 +11,9 @@
             <input
               type="text"
               class="form-control"
-              id="exampleInputEmail1"
+              id="username"
               v-model="username"
-              aria-describedby="emailHelp"
+              required
               placeholder="Username"
             />
           </div>
@@ -21,10 +21,17 @@
             <input
               type="password"
               class="form-control"
-              id="exampleInputPassword1"
+              id="password"
               v-model="password"
+              required
               placeholder="Password"
             />
+          </div>
+          <div
+            v-if="password.length > 0 && password.length < 6"
+            class="text-danger"
+          >
+            Password should be greater than 6 characters
           </div>
 
           <button class="btn btn-primary" v-on:click="login">Log in</button>

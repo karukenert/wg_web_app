@@ -13,6 +13,7 @@
               class="form-control"
               id="userName"
               v-model="username"
+              required
               placeholder="Username"
             />
           </div>
@@ -22,6 +23,7 @@
               class="form-control"
               id="fullName"
               v-model="fullName"
+              required
               placeholder="Full name"
             />
           </div>
@@ -31,6 +33,7 @@
               class="form-control"
               id="email"
               v-model="email"
+              required
               placeholder="Email address"
             />
           </div>
@@ -40,8 +43,16 @@
               class="form-control"
               id="password"
               v-model="password"
+              required
               placeholder="Password"
             />
+
+            <div
+              v-if="password.length > 0 && password.length < 6"
+              class="text-danger"
+            >
+              Password should be greater than 6 characters
+            </div>
           </div>
           <br />
           <button v-on:click="register" class="btn btn-primary">Sign up</button>
