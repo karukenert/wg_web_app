@@ -1,64 +1,55 @@
 <template>
-  <div class="container">
+  <div>
     <h1>Register</h1>
-
-    <br />
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
+    <div>
+      <div>
         <form @submit.prevent="register">
-          <div class="mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="userName"
-              v-model="username"
-              required
-              placeholder="Username"
-            />
-          </div>
-          <div class="mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="fullName"
-              v-model="fullName"
-              required
-              placeholder="Full name"
-            />
-          </div>
-          <div class="mb-3">
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              v-model="email"
-              required
-              placeholder="Email address"
-            />
-          </div>
-          <div class="mb-3">
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              v-model="password"
-              required
-              placeholder="Password"
-            />
+          <input
+            type="text"
+            class="form-control"
+            id="userName"
+            v-model="username"
+            required
+            placeholder="Username"
+          />
 
-            <div
-              v-if="password.length > 0 && password.length < 6"
-              class="text-danger"
-            >
-              Password should be greater than 6 characters
-            </div>
+          <input
+            type="text"
+            class="form-control"
+            id="fullName"
+            v-model="fullName"
+            required
+            placeholder="Full name"
+          />
+
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            v-model="email"
+            required
+            placeholder="Email address"
+          />
+
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            v-model="password"
+            required
+            placeholder="Password"
+          />
+
+          <div
+            v-if="password.length > 0 && password.length < 6"
+            class="text-danger"
+          >
+            Password should be greater than 6 characters
           </div>
-          <br />
-          <button class="btn btn-primary" type="submit">Sign up</button>
+
+          <button type="submit">Sign up</button>
         </form>
       </div>
-      <div class="col-md-3"></div>
     </div>
   </div>
 </template>
