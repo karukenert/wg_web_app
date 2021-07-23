@@ -19,13 +19,6 @@
         placeholder="Password"
       />
 
-      <div
-        v-if="password.length > 0 && password.length < 6"
-        class="text-danger"
-      >
-        Password should be greater than 6 characters
-      </div>
-
       <button type="submit">Log in</button>
     </form>
   </div>
@@ -33,6 +26,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
 
 export default {
   name: "login",
@@ -43,7 +37,20 @@ export default {
   methods: {
     ...mapActions(["LOGGED_IN_SET_STATUS"]),
     async login() {
-      await this.LOGGED_IN_SET_STATUS(true);
+      const response = await axios.post(
+        "https://wgwebserver.herokuapp.com/user/login",
+        {
+          username: this.username,
+          password: this.password,
+        }
+      );
+      if (response.status === 200) {
+        await this.LOGGED_IN_SET_STATUS(true);
+        this.$router.push("/");
+        // TODO Store tokens in vuex store
+        // res.status(200).json({ accessToken: accessToken, refreshToken: refreshToken });
+      }
+      // TODO add failure modal
     },
   },
   computed: {

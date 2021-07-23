@@ -18,7 +18,7 @@
             class="form-control"
             id="fullName"
             v-model="fullName"
-            required
+            disabled
             placeholder="Full name"
           />
 
@@ -27,7 +27,7 @@
             class="form-control"
             id="email"
             v-model="email"
-            required
+            disabled
             placeholder="Email address"
           />
 
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "register",
   data: () => ({
@@ -64,10 +65,18 @@ export default {
     password: "",
   }),
   methods: {
-    register: function () {
-      console.log(
-        `username: ${this.username} \nfullname: ${this.fullName} \nemail: ${this.email} \npassword: ${this.password}`
+    async register() {
+      const response = await axios.post(
+        "https://wgwebserver.herokuapp.com/user/signup",
+        {
+          username: this.username,
+          password: this.password,
+        }
       );
+      if (response.status === 200) {
+        await this.LOGGED_IN_SET_STATUS(true);
+      }
+      // TODO add failure modal
     },
   },
 };
