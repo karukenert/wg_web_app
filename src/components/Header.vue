@@ -1,7 +1,6 @@
 <template>
+  <div><router-link to="/">Word Guesser</router-link></div>
   <div>
-    <router-link to="/">Word Guesser</router-link>
-    |
     <router-link to="/">Home</router-link>
     |
     <router-link to="/about">About</router-link>
