@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "login",
   data: () => ({
@@ -39,15 +41,16 @@ export default {
     password: "",
   }),
   methods: {
-    login: function () {
-      console.log(
-        `Username is ${this.username} \nPassword is ${this.password}`
-      );
+    ...mapActions(["LOGGED_IN_SET_STATUS"]),
+    async login() {
+      await this.LOGGED_IN_SET_STATUS(true);
     },
+  },
+  computed: {
+    ...mapGetters(["isLoggedIn"]),
   },
 };
 </script>
 
 <style scoped>
-/* TODO use css grid */
 </style>
