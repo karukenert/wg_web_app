@@ -73,7 +73,7 @@ export default {
           password: this.password,
         }
       );
-      if (response.status === 200) {
+      if (response.status === 201) {
         await this.LOGGED_IN_SET_STATUS(true);
       }
       // TODO add failure modal
