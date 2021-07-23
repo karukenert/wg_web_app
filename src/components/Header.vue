@@ -1,26 +1,23 @@
 <template>
-  <div>
-    <div class="logo">Word Guesser</div>
+  <div class="navbar">
+    <div class="left">
+      <div class="left logo">Word Guesser</div>
 
-    <div class="nav-items">
-      <router-link to="/">Home</router-link>
-      |
-      <router-link to="/about">About</router-link>
+      <div class="right text">
+        <router-link to="/">Home</router-link>
+        |
+        <router-link to="/about">About</router-link>
+      </div>
     </div>
-    <div>
+
+    <div class="right text">
       <div v-if="!this.isLoggedIn">
         <router-link to="/login">Login</router-link>
         |
         <router-link to="/register">Register</router-link>
       </div>
 
-      <router-link
-        class="disableActive"
-        v-if="this.isLoggedIn"
-        v-on:click="logOut"
-        to="/"
-        >Log out</router-link
-      >
+      <a v-if="this.isLoggedIn" v-on:click="logOut" to="/">Log out</a>
     </div>
   </div>
 </template>
@@ -41,25 +38,42 @@ export default {
 </script>
 
 <style lang="scss">
-a {
-  font-weight: bold;
-  color: #2c3e50;
-  text-decoration: none;
+.navbar {
+  background-color: aqua;
+  width: 100%;
+  display: inline-block;
+  padding: 16px;
 
-  &.router-link-exact-active {
-    color: #42b983;
-  }
-}
-
-.logo {
-  font-size: 30px;
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-.disableActive {
-  &.router-link-exact-active {
+  a {
     color: #2c3e50;
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    &.router-link-exact-active {
+      font-weight: bold;
+      color: #42b983;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .right {
+    float: right;
+  }
+  .left {
+    float: left;
+
+    &.logo {
+      font-weight: bold;
+      padding-right: 16px;
+      font-size: 16px;
+      color: #2c3e50;
+    }
   }
 }
 </style>
