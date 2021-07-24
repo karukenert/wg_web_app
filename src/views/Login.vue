@@ -35,7 +35,7 @@ export default {
     password: "",
   }),
   methods: {
-    ...mapActions(["LOGGED_IN_SET_STATUS"]),
+    ...mapActions(["LOGGED_IN_SET"]),
     async login() {
       const response = await axios.post(
         "https://wgwebserver.herokuapp.com/user/login",
@@ -44,13 +44,17 @@ export default {
           password: this.password,
         }
       );
+
       if (response.status === 200) {
-        await this.LOGGED_IN_SET_STATUS(true);
+        await this.LOGGED_IN_SET({
+          accessToken: response.data.accessToken,
+          refreshToken: response.data.refreshToken,
+        });
         this.$router.push("/");
-        // TODO Store tokens in vuex store
-        // res.status(200).json({ accessToken: accessToken, refreshToken: refreshToken });
+      } else {
+        // TODO Error modal
+        alert(`We have an error: ${response.data}`);
       }
-      // TODO add failure modal
     },
   },
   computed: {

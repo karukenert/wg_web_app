@@ -24,14 +24,28 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
+
 export default {
   computed: {
-    ...mapGetters(["isLoggedIn"]),
+    ...mapGetters(["isLoggedIn", "getRefreshToken"]),
   },
   methods: {
-    ...mapActions(["LOGGED_IN_SET_STATUS"]),
+    ...mapActions(["LOGGED_IN_SET"]),
     async logOut() {
-      await this.LOGGED_IN_SET_STATUS(false);
+      const response = await axios.post(
+        "https://wgwebserver.herokuapp.com/user/logout",
+        {
+          token: this.getRefreshToken,
+        }
+      );
+      if (response.status === 204) {
+        await this.LOGGED_IN_SET(false);
+        this.$router.push("/");
+      } else {
+        alert(`We have an error: ${response.data}`);
+      }
+      // TODO add failure modal
     },
   },
 };
