@@ -14,24 +14,6 @@
           />
 
           <input
-            type="text"
-            class="form-control"
-            id="fullName"
-            v-model="fullName"
-            disabled
-            placeholder="Full name"
-          />
-
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            v-model="email"
-            disabled
-            placeholder="Email address"
-          />
-
-          <input
             type="password"
             class="form-control"
             id="password"
@@ -67,12 +49,13 @@ export default {
   }),
   methods: {
     async register() {
+      // TODO add loading icon and loading boolean to data object
       const response = await axios.post(`${Constants.BASE_URL}/user/signup`, {
         username: this.username,
         password: this.password,
       });
       if (response.status === 201) {
-        await this.LOGGED_IN_SET_STATUS(true);
+        this.$router.push("/login");
       }
       // TODO add failure modal
     },
@@ -81,5 +64,5 @@ export default {
 </script>
 
 <style scoped>
-/* TODO use css grid */
+/* TODO styling for registering window*/
 </style>
