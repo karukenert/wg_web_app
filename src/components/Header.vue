@@ -25,6 +25,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
+import * as Constants from "../constants.js";
 
 export default {
   computed: {
@@ -33,12 +34,9 @@ export default {
   methods: {
     ...mapActions(["LOGGED_IN_SET"]),
     async logOut() {
-      const response = await axios.post(
-        "https://wgwebserver.herokuapp.com/user/logout",
-        {
-          token: this.getRefreshToken,
-        }
-      );
+      const response = await axios.post(`${Constants.BASE_URL}/user/logout`, {
+        token: this.getRefreshToken,
+      });
       if (response.status === 204) {
         await this.LOGGED_IN_SET(false);
         this.$router.push("/");

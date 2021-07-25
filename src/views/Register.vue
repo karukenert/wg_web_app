@@ -56,6 +56,7 @@
 
 <script>
 import axios from "axios";
+import * as Constants from "../constants.js";
 export default {
   name: "register",
   data: () => ({
@@ -66,13 +67,10 @@ export default {
   }),
   methods: {
     async register() {
-      const response = await axios.post(
-        "https://wgwebserver.herokuapp.com/user/signup",
-        {
-          username: this.username,
-          password: this.password,
-        }
-      );
+      const response = await axios.post(`${Constants.BASE_URL}/user/signup`, {
+        username: this.username,
+        password: this.password,
+      });
       if (response.status === 201) {
         await this.LOGGED_IN_SET_STATUS(true);
       }

@@ -27,6 +27,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
+import * as Constants from "../constants.js";
 
 export default {
   name: "login",
@@ -37,13 +38,10 @@ export default {
   methods: {
     ...mapActions(["LOGGED_IN_SET"]),
     async login() {
-      const response = await axios.post(
-        "https://wgwebserver.herokuapp.com/user/login",
-        {
-          username: this.username,
-          password: this.password,
-        }
-      );
+      const response = await axios.post(`${Constants.BASE_URL}/user/login`, {
+        username: this.username,
+        password: this.password,
+      });
 
       if (response.status === 200) {
         await this.LOGGED_IN_SET({
