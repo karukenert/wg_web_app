@@ -1,35 +1,38 @@
 <template>
-  <div id="app">
-    <Header />
-    <br />
-    <router-view />
+  <div>
+    <header>
+      <Navbar />
+    </header>
+    <main>
+      <router-view />
+    </main>
   </div>
 </template>
 
 <script>
-import Header from "./components/Header.vue";
+import Navbar from "./components/Navbar.vue";
 
 export default {
   name: "App",
   components: {
-    Header,
+    Navbar,
   },
 };
 </script>
 
 
 <style lang="scss">
-// TODO active router link fix
 * {
   margin: 0;
   padding: 0;
 }
 
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+main {
+  padding-top: 16px;
+}
+
+body {
+  font-family: "montserrat", sans-serif;
   text-align: center;
-  color: #2c3e50;
 }
 </style>
