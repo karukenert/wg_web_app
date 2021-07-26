@@ -1,15 +1,21 @@
 <template>
   <nav>
-    <router-link class="menu-item" to="/">Home</router-link>
-    <router-link class="menu-item" to="/about">About</router-link>
-    <router-link v-if="!this.isLoggedIn" class="menu-item" to="/login"
-      >Login</router-link
-    >
-    <router-link v-if="!this.isLoggedIn" class="menu-item" to="/register"
-      >Register</router-link
-    >
-    <div v-if="this.isLoggedIn" class="menu-item" v-on:click="logOut">
-      Log out
+    <div class="left">
+      <strong class="logo">Word Guesser</strong>
+      <router-link class="menu-item" to="/">Home</router-link>
+      <router-link class="menu-item" to="/about">About</router-link>
+    </div>
+
+    <div class="right">
+      <router-link v-if="!this.isLoggedIn" class="menu-item" to="/login"
+        >Login</router-link
+      >
+      <router-link v-if="!this.isLoggedIn" class="menu-item" to="/register"
+        >Register</router-link
+      >
+      <a v-if="this.isLoggedIn" class="menu-item" v-on:click="logOut">
+        Log out
+      </a>
     </div>
   </nav>
 </template>
@@ -48,15 +54,20 @@ nav {
   width: 100vw;
   background-color: aqua;
   display: flex;
-  // align-items: center;
-  // justify-content: center;
+  justify-content: space-between;
 
+  .logo {
+    padding: 0 10px;
+  }
+
+  .left,
+  .right {
+    padding: 10px 0px;
+    margin-bottom: 3px;
+  }
   .menu-item {
     padding: 10px 20px;
-    // position: relative;
-    // text-align: center;
     border-bottom: 3px solid transparent;
-    // display: flex;
     transition: 0.4s;
 
     color: inherit;
@@ -69,7 +80,8 @@ nav {
       }
     }
     &:hover {
-      border-bottom-color: green;
+      border-bottom-color: darkcyan;
+      cursor: pointer;
     }
   }
 }
