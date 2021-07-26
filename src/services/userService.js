@@ -2,6 +2,7 @@ import store from '../store/index.js';
 import axios from 'axios';
 import * as Constants from '../constants.js';
 
+// TODO log out method
 
 export async function syncLoggedIn() {
     const response = await axios.post(`${Constants.BASE_URL}/user/token`, {
