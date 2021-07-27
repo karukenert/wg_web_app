@@ -22,13 +22,16 @@ export default {
 
 
 <style lang="scss">
+.app {
+  max-width: 100%;
+}
 * {
   margin: 0;
   padding: 0;
 }
 
 main {
-  padding-top: 16px;
+  padding: 16px;
 }
 
 body {
