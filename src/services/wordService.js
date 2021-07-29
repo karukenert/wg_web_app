@@ -1,12 +1,11 @@
-import store from '../store/index.js';
 import axios from 'axios';
 import * as Constants from '../constants.js';
 import { syncLoggedIn } from './userService.js';
 
-export async function getWord(word) {
+export async function getWord(word, tokens) {
     const response = await axios.get(`${Constants.BASE_URL}/est/get/${word}`, {
         headers: {
-            'authorization': `Bearer ${store.getters.getAccessToken}`
+            'authorization': `Bearer ${tokens.accessToken}`
         }
     });
     let data = response.data;
@@ -15,15 +14,15 @@ export async function getWord(word) {
         return data[0];
     } else if (response.status === 403) {
         console.log(data.message);
-        await syncLoggedIn();
-        await getWord(word);
+        await syncLoggedIn(tokens);
+        await getWord(word, tokens);
     } else if (response.statusCode == 401) {
-        console.log(`You are unauthorized to view it, Logging out.` +
+        console.log(`status: ${response.status}, You are unauthorized to view it, Logging out.` +
             `\nerror: ${data.message}`);
         // log out method
     } else if (response.status === 404) {
-        console.log(`${word} was not found`);
+        console.log(`${word} was not found: status response.status`);
     } else {
-        console.log('else');
+        console.log(`else, status: ${response.status}`);
     }
 }

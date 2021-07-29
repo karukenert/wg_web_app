@@ -2,39 +2,32 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    isLoggedIn: false,
-    accessToken: "",
-    refreshToken: ""
+    tokens: null
   },
   mutations: {
     M_LOGGED_IN_SET(state, status) {
       state.isLoggedIn = status;
     },
-    M_ACCESS_TOKEN_SET(state, token) {
-      state.accessToken = token;
+    M_TOKENS_SET(state, tokens) {
+      state.tokens = tokens;
     },
-    M_REFRESH_TOKEN_SET(state, token) {
-      state.refreshToken = token;
-    },
+
   },
   actions: {
     async LOGGED_IN_SET(context, data) {
       if (data === false) {
-        context.commit("M_LOGGED_IN_SET", false);
-        context.commit("M_ACCESS_TOKEN_SET", "");
-        context.commit("M_REFRESH_TOKEN_SET", "");
+        context.commit("M_TOKENS_SET", null);
       } else {
-        context.commit("M_LOGGED_IN_SET", true);
-        context.commit("M_ACCESS_TOKEN_SET", data.accessToken);
-        context.commit("M_REFRESH_TOKEN_SET", data.refreshToken);
+        context.commit("M_TOKENS_SET", data);
       }
 
     },
   },
   getters: {
-    isLoggedIn(state) { return state.isLoggedIn; },
-    getAccessToken(state) { return state.accessToken; },
-    getRefreshToken(state) { return state.refreshToken; }
+    isLoggedIn(state) {
+      if (state.tokens) { return true; } else { return false; }
+    },
+    getTokens: state => state.tokens,
   },
   modules: {},
 });

@@ -42,6 +42,7 @@ async function syncLoggedIn({ accessToken, refreshToken }) {
     } else {
         // TODO Error modal, if false returned
         return { status: false };
+        // 
     }
 }
 

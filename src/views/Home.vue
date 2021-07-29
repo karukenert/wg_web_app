@@ -41,12 +41,12 @@ export default {
     WordCard,
   },
   computed: {
-    ...mapGetters(["isLoggedIn"]),
+    ...mapGetters(["isLoggedIn", "getTokens"]),
   },
   methods: {
     async fetchWord() {
       // If empty word, show error
-      this.word = await getWord(this.queryWord);
+      this.word = await getWord(this.queryWord, this.getTokens);
     },
   },
 };
