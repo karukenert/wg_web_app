@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 const userService = require("@/services/userService");
 
 export default {
@@ -35,9 +35,16 @@ export default {
     password: "",
   }),
   methods: {
+    ...mapActions(["LOGGED_IN_SET"]),
     async logUserIn() {
-      let status = await userService.logIn(this.username, this.password);
-      if (status) this.$router.push("/");
+      // TODO implement loading.
+      let logInStatus = await userService.logIn(this.username, this.password);
+      if (logInStatus.status) {
+        await this.LOGGED_IN_SET(logInStatus.tokens);
+        this.$router.push("/");
+      } else {
+        //TODO  show error modal
+      }
     },
   },
   computed: {

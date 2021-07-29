@@ -1,44 +1,51 @@
-import store from '../store/index.js';
 import axios from 'axios';
 import * as Constants from '../constants.js';
 
 // TODO log out method
 
-export async function logIn(username, password) {
+async function logIn(username, password) {
     const response = await axios.post(`${Constants.BASE_URL}/user/login`, {
         username,
         password
     });
 
     if (response.status === 200) {
-        store._actions.LOGGED_IN_SET[0]({
-            accessToken: response.data.accessToken,
-            refreshToken: store.getters.refreshToken,
-        });
-        return true;
+        return {
+            status: true,
+            tokens: {
+                accessToken: response.data.accessToken,
+                refreshToken: response.data.refreshToken,
+            }
+        };
+
     } else {
-        // TODO Error modal
-        alert(`We have an error: ${response.data}`);
-        return false;
-    }
+        // TODO Error modal, if false returned
+        return { status: false };
+    };
+
 }
 
-export async function syncLoggedIn() {
+async function syncLoggedIn({ accessToken, refreshToken }) {
     const response = await axios.post(`${Constants.BASE_URL}/user/token`, {
-        accessToken: store.getters.getAccessToken,
-        refreshToken: store.getters.getRefreshToken
+        accessToken,
+        refreshToken
     });
-    // TODO store._actions.LOGGED_IN_SET[0] - is [0] necessary?
+
     if (response.status === 200) {
-        store._actions.LOGGED_IN_SET[0]({
-            accessToken: response.data.accessToken,
-            refreshToken: store.getters.refreshToken,
-        });
+        return {
+            status: true,
+            tokens: {
+                accessToken: response.data.accessToken,
+                refreshToken: response.data.refreshToken,
+            }
+        };
     } else {
-        store._actions.LOGGED_IN_SET[0](false);
+        // TODO Error modal, if false returned
+        return { status: false };
     }
 }
 
-
-// const { syncLoggedIn } = require("../services/userService.js");
-// await syncLoggedIn();
+export {
+    syncLoggedIn,
+    logIn
+};
