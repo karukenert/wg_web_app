@@ -8,21 +8,35 @@ export async function getWord(word, tokens) {
             'authorization': `Bearer ${tokens.accessToken}`
         }
     });
+
     let data = response.data;
 
-    if (response.status === 200) {
-        return data[0];
-    } else if (response.status === 403) {
-        console.log(data.message);
-        await syncLoggedIn(tokens);
-        await getWord(word, tokens);
-    } else if (response.statusCode == 401) {
-        console.log(`status: ${response.status}, You are unauthorized to view it, Logging out.` +
-            `\nerror: ${data.message}`);
-        // log out method
-    } else if (response.status === 404) {
-        console.log(`${word} was not found: status response.status`);
-    } else {
-        console.log(`else, status: ${response.status}`);
+    switch (response.status) {
+        case 404: {
+            // BUG
+            console.log(`${word} was not found: status response.status`);
+            return false;
+        }
+        case 403: {
+            console.log(data.message);
+            await syncLoggedIn(tokens);
+            await getWord(word, tokens);
+            break;
+        }
+        case 401: {
+            console.log(`status: ${response.status}, You are unauthorized to view it, Logging out.` +
+                `\nerror: ${data.message}`);
+            return false;
+            // TODO #15 log out method
+        }
+        case 200: {
+            return data[0];
+        }
+        default: {
+            console.log(`else, status: ${response.status}`);
+            return false;
+
+        }
     }
+
 }
