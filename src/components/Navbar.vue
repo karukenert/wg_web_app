@@ -51,7 +51,6 @@ export default {
 
 <style lang="scss">
 nav {
-  width: 100vw;
   background-color: aqua;
   display: flex;
   justify-content: space-between;
